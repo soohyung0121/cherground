@@ -13,12 +13,15 @@ export class RequestControllerImpl implements RequestController {
         this.requestService = requestService;
     }
 
-    getUserRequestByEmail= (requests: Request): Promise<Boolean> => {
-        let requestPromise = this.requestService.getUserRequestByEmail(requests);
+    saveUserRequest= (requests: Request): Promise<Boolean> => {
+        let requestPromise = this.requestService.saveUserRequest(requests);
+        console.log(requestPromise)
+        console.log(requests, 'controller')
 
         return new Promise((resolve, reject) => {
             requestPromise
-                .then((request: Request) => {
+                .then((requests) => {
+                    console.log(requests, requestPromise)
                     resolve(true)
                 })
                 .catch((err) => {
@@ -29,7 +32,6 @@ export class RequestControllerImpl implements RequestController {
 
     getUserRequestListByEmail = (userEmail: string): Promise<Array<Request>> => {
         let userRequestListPromise = this.requestService.getUserRequestListByEmail(userEmail);
-
         console.log('Request controller ok')
 
         return new Promise((resolve, reject) => {
@@ -42,6 +44,19 @@ export class RequestControllerImpl implements RequestController {
                     console.log("this is controller reject zunkyu")
                     reject(err)
                 })
+        })
+    }
+    getUserRequest = (userEmail: string, ordinal: number): Promise<Request> => {
+        let userRequest : Promise<Request> =  this.requestService.getUserRequest(userEmail, ordinal)
+
+        return new Promise((resolve, reject) => {
+            userRequest
+            .then((request : Request) => {
+                resolve(request)
+            })
+            .catch((err) => {
+                reject(err)
+            })
         })
     }
 }

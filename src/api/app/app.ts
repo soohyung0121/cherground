@@ -54,7 +54,8 @@ export default class App {
 
         this.app.post('/request', (request: express.Request, response: express.Response) => {
             let requests: Request = request.body;
-            let requestResult: Promise<Boolean> = requestController.getUserRequestByEmail(requests);
+            // console.log(requests.userEmail)
+            let requestResult: Promise<Boolean> = requestController.saveUserRequest(requests);
 
             requestResult
                 .then((request: Boolean) => {
@@ -78,7 +79,23 @@ export default class App {
                 .catch((err: Error) => {
                     response.status(400);
                     response.send(err.message);
-                })            
+                })
+        })
+        this.app.get('/user-request/', (request: express.Request, response: express.Response) => {
+            let userEmail = <string> request.query.userEmail;
+            let ordinal = parseInt(<string> request.query.ordinal);
+
+            let result: Promise<Request> = requestController.getUserRequest(userEmail, ordinal);
+            result
+                .then((getresult : Request) => {
+                    console.log(getresult)
+                    response.status(200);
+                    response.send(getresult);
+                })
+                .catch((err: Error) => {
+                    response.status(400);
+                    response.send(err.message);
+                })
         })
     }
 }

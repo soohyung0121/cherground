@@ -13,7 +13,12 @@ export class RequestDaoImpl implements RequestDao {
 
         let docClient = new this.aws.DynamoDB.DocumentClient();
 
-        // save change
+        let requestget = this.loadUsersRequest(requests.userEmail)
+        requestget
+            .then(() => {
+                console.log()
+            })
+            .catch()
 
         let params = {
             TableName: "request",
@@ -27,7 +32,39 @@ export class RequestDaoImpl implements RequestDao {
                      reject(false)
                 } else {
                     console.log("Add Request", JSON.stringify(data, null, 2))
+                    console.log(requests, 'dao')
                     resolve(requests)
+                }
+            })
+        })
+    }
+
+    getUserRequest(userEmail: string, ordinal: number): Promise<RequestVo> {
+        this.aws.config.update(awsConfig.config);
+
+        let docClient = new this.aws.DynamoDB.DocumentClient();
+
+        let params = {
+            TableName: "request",
+            Key: {
+                userEmail: userEmail,
+                ordinal: ordinal
+            }
+        }
+        console.log(params)
+
+        return new Promise((resolve, reject) => {
+            docClient.get(params, (err, data) => {
+                if(err) {
+                    console.error("Unable to read item. Error JSON:", JSON.stringify(err, null, 2));
+                    reject(new Error("AWS Error"));
+                } else {
+                    console.log("GetItem succeeded:", JSON.stringify(data, null, 2));
+                    if(data.Item == null) {
+                        reject(new Error("Not Exist Request"));
+                    }
+                    console.log(data.Item)
+                    resolve(<RequestVo> data.Item);
                 }
             })
         })
@@ -46,10 +83,8 @@ export class RequestDaoImpl implements RequestDao {
             }, 
             ExpressionAttributeValues: {
                 ':email': userEmail,
-                
             }
         }
-        console.log(userEmail)
 
         return new Promise((resolve, reject) => {
             docClient.query(params, (err, data) => {
