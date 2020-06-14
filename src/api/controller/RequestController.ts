@@ -1,6 +1,7 @@
 import { Request } from '../dto/Request';
 
 export interface RequestController {
-    getUserRequestByEmail(request: Request): Promise<Boolean>;
+    saveUserRequest(request: Request): Promise<Boolean>;
     getUserRequestListByEmail(userEmail: string): Promise<Array<Request>>;
+    getUserRequest(userEmail: string, ordinal: number): Promise<Request>
 }

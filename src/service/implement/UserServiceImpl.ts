@@ -85,10 +85,8 @@ export class UserServiceImpl implements UserService {
                         resolve(accessToken);
                     } else {
                         //controller에게 틀렸다고 알려준다.
-
                         //패스워드가 틀렸다고 메세지를 보낸다.
                         //패스워드 얘기는 말고 그냥 틀렸다고 한다.
-
                         //console.log()를 이용한다.
                         //스트링으로 인밸리드키
                         reject(new Error("LogIn Failed"))
@@ -96,10 +94,8 @@ export class UserServiceImpl implements UserService {
                 }
             }).catch((err) => {
                 //controller에 에러를 전달한다.
-
                 //에러메서드를 이용한다.
                 //에러메세지로 보내준다.
-
                 // reject(new Error("Not Exist"));
                 reject(err);
             })

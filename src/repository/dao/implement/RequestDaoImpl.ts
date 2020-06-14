@@ -12,13 +12,11 @@ export class RequestDaoImpl implements RequestDao {
         this.aws.config.update(awsConfig.config);
 
         let docClient = new this.aws.DynamoDB.DocumentClient();
-
-        // save change
-
         let params = {
             TableName: "request",
             Item: requests
         }
+        console.log(params)
 
         return new Promise((resolve, reject) => {
             docClient.put(params, (err, data) => {
@@ -28,6 +26,36 @@ export class RequestDaoImpl implements RequestDao {
                 } else {
                     console.log("Add Request", JSON.stringify(data, null, 2))
                     resolve(requests)
+                }
+            })
+        })
+    }
+    getUserRequest(userEmail: string, ordinal: number): Promise<RequestVo> {
+        this.aws.config.update(awsConfig.config);
+
+        let docClient = new this.aws.DynamoDB.DocumentClient();
+
+        let params = {
+            TableName: "request",
+            Key: {
+                userEmail: userEmail,
+                ordinal: ordinal
+            }
+        }
+        console.log(params)
+
+        return new Promise((resolve, reject) => {
+            docClient.get(params, (err, data) => {
+                if(err) {
+                    console.error("Unable to read item. Error JSON:", JSON.stringify(err, null, 2));
+                    reject(new Error("AWS Error"));
+                } else {
+                    console.log("GetItem succeeded:", JSON.stringify(data, null, 2));
+                    if(data.Item == null) {
+                        reject(new Error("Not Exist Request"));
+                    }
+                    console.log(data.Item)
+                    resolve(<RequestVo> data.Item);
                 }
             })
         })
@@ -46,10 +74,8 @@ export class RequestDaoImpl implements RequestDao {
             }, 
             ExpressionAttributeValues: {
                 ':email': userEmail,
-                
             }
         }
-        console.log(userEmail)
 
         return new Promise((resolve, reject) => {
             docClient.query(params, (err, data) => {
@@ -59,7 +85,7 @@ export class RequestDaoImpl implements RequestDao {
                 } else {
 
                     if(data.Items.length < 1) {
-                        reject(new Error("User Email Does Not Exists"))
+                        resolve(<Array<RequestVo>> data.Items)
                     } else {
                         data.Items.forEach(item => {
                             // console.log("Good:", JSON.stringify(data,null,2));
