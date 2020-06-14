@@ -1,14 +1,14 @@
 export class Request {
     userEmail: string;
-    ordinal: number;
-    brandname: string;
-    stylename: string;
+    ordinal?: number;
+    brandName: string;
+    styleName: string;
     color: string;
-    wantedorder: number;
+    quantity: number;
     memo: string;
     image: string;
-    category: Category;
-    requestStatus: RequestStatus;
+    categoryName: Category;
+    requestStatusName: RequestStatus;
 }
 
 export enum Category {

@@ -8,7 +8,7 @@ export class RequestVo {
     memo: string;
     image: string;
     categoryName: string;
-    RequestStatusName: string;
+    requestStatusName: string;
 }
 
 // enum Category {
