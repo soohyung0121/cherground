@@ -15,13 +15,10 @@ export class RequestControllerImpl implements RequestController {
 
     saveUserRequest= (requests: Request): Promise<Boolean> => {
         let requestPromise = this.requestService.saveUserRequest(requests);
-        console.log(requestPromise)
-        console.log(requests, 'controller')
 
         return new Promise((resolve, reject) => {
             requestPromise
                 .then((requests) => {
-                    console.log(requests, requestPromise)
                     resolve(true)
                 })
                 .catch((err) => {

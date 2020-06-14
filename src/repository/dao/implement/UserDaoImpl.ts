@@ -19,7 +19,7 @@ export class UserDaoImpl implements UserDao {
         let params = {
             TableName: "user",
             Item: user
-        }
+        } 
 
         return new Promise((resolve, reject) => {
             docClient.put(params, (err, data) => {

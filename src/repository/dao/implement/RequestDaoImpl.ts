@@ -12,18 +12,11 @@ export class RequestDaoImpl implements RequestDao {
         this.aws.config.update(awsConfig.config);
 
         let docClient = new this.aws.DynamoDB.DocumentClient();
-
-        let requestget = this.loadUsersRequest(requests.userEmail)
-        requestget
-            .then(() => {
-                console.log()
-            })
-            .catch()
-
         let params = {
             TableName: "request",
             Item: requests
         }
+        console.log(params)
 
         return new Promise((resolve, reject) => {
             docClient.put(params, (err, data) => {
@@ -32,13 +25,11 @@ export class RequestDaoImpl implements RequestDao {
                      reject(false)
                 } else {
                     console.log("Add Request", JSON.stringify(data, null, 2))
-                    console.log(requests, 'dao')
                     resolve(requests)
                 }
             })
         })
     }
-
     getUserRequest(userEmail: string, ordinal: number): Promise<RequestVo> {
         this.aws.config.update(awsConfig.config);
 
@@ -94,7 +85,7 @@ export class RequestDaoImpl implements RequestDao {
                 } else {
 
                     if(data.Items.length < 1) {
-                        reject(new Error("User Email Does Not Exists"))
+                        resolve(<Array<RequestVo>> data.Items)
                     } else {
                         data.Items.forEach(item => {
                             // console.log("Good:", JSON.stringify(data,null,2));

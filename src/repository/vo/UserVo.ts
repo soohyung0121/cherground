@@ -1,6 +1,6 @@
 export class UserVo {
     name: string;
-    phone: string;
+    phoneNumber: string;
     address: string;
     email: string;
     password: string;

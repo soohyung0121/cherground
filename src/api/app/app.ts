@@ -68,7 +68,7 @@ export default class App {
                 })
         })
 
-        this.app.get('/user-request/:email', (request: express.Request, response: express.Response) => {
+        this.app.get('/request/:email', (request: express.Request, response: express.Response) => {
             let userEmail: string = request.params.email;
             let result: Promise<Array<Request>> = requestController.getUserRequestListByEmail(userEmail);
             result

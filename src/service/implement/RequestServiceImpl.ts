@@ -4,6 +4,8 @@ import { RequestDao } from 'repository/dao/RequestDao'
 import { Request } from 'api/dto/Request';
 import { RequestVo } from 'repository/vo/RequestVo';
 import { RequestMapper } from 'mapper/RequestMapper';
+import { RequestStatus, Category } from '../../api/dto/Request';
+
 
 @injectable()
 export class RequestServiceImpl implements RequestService {
@@ -20,7 +22,7 @@ export class RequestServiceImpl implements RequestService {
 
     saveUserRequest = async (requests: Request): Promise<Request> => {
         let userRequestList: Array<RequestVo> = await this.requestDao.loadUsersRequest(requests.userEmail);
-
+        
         var ordinal;
         if (userRequestList.length > 0) {
             userRequestList.reduce((previous, current) => {
@@ -31,10 +33,19 @@ export class RequestServiceImpl implements RequestService {
             ordinal = 1;
         }
         requests.ordinal = ordinal;
+
+        // let category = this.requestMapper.convert(requests.category)
+
+        var usersRequest;
+        if(requests.category in Category){
+            usersRequest = this.requestDao.saveUserRequest(requests)
+        } else {
+            console.log("INVALID CATEGORY")
+        }
+
+        // let usersRequest = this.requestDao.saveUserRequest(requests)
+
         
-
-        let usersRequest: Promise<RequestVo> = this.requestDao.saveUserRequest(requests)
-
         return new Promise((resolve, reject) => {
             usersRequest
             .then((result)=> {
@@ -52,7 +63,7 @@ export class RequestServiceImpl implements RequestService {
             userRequestListPromise
                 .then((data) => {
                     // console.log(data, "in RequestService")
-                    resolve(<Array<RequestVo>> data);
+                    resolve(<Array<Request>> data);
                 })
                 .catch((err) => {
                     reject(err);
