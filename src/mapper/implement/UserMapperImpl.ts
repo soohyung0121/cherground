@@ -9,7 +9,7 @@ export class UserMapperImpl implements UserMapper {
     convert(vo: UserVo): User {
         let user = new User();
         user.name = vo.name;
-        user.phone = vo.phone;
+        user.phoneNumber = vo.phoneNumber;
         user.address = vo.address;
         user.email = vo.email;
         user.password = vo.password;
@@ -19,7 +19,7 @@ export class UserMapperImpl implements UserMapper {
     revert(dto: User): UserVo {
         let userVo = new UserVo();
         userVo.name = dto.name;
-        userVo.phone = dto.phone;
+        userVo.phoneNumber = dto.phoneNumber;
         userVo.address = dto.address;
         userVo.email = dto.email;
         userVo.password = dto.password;

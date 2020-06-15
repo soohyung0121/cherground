@@ -1,13 +1,12 @@
 import express, { request, response } from 'express';
 import bodyParser from 'body-parser';
-
 import 'reflect-metadata';
 import container from '../../injector';
-
 import { UserController } from 'api/controller/UserController';
 import { User } from 'api/dto/User';
 import { RequestController } from 'api/controller/RequestController';
 import { Request } from 'api/dto/Request';
+import { String } from 'aws-sdk/clients/batch';
 
 export default class App {
     public app: express.Application;
@@ -68,8 +67,8 @@ export default class App {
                 })
         })
 
-        this.app.get('/request/:email', (request: express.Request, response: express.Response) => {
-            let userEmail: string = request.params.email;
+        this.app.get('/requests/:email', (request: express.Request, response: express.Response) => {
+            let userEmail : String = request.params.email;
             let result: Promise<Array<Request>> = requestController.getUserRequestListByEmail(userEmail);
             result
                 .then((data : Array<Request>) => {
@@ -81,6 +80,7 @@ export default class App {
                     response.send(err.message);
                 })
         })
+        
         this.app.get('/user-request/', (request: express.Request, response: express.Response) => {
             let userEmail = <string> request.query.userEmail;
             let ordinal = parseInt(<string> request.query.ordinal);

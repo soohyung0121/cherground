@@ -37,8 +37,12 @@ export class RequestServiceImpl implements RequestService {
         // let category = this.requestMapper.convert(requests.category)
 
         var usersRequest;
-        if(requests.category in Category){
-            usersRequest = this.requestDao.saveUserRequest(requests)
+        if(requests.categoryName in Category){
+            if(requests.requestStatusName in RequestStatus){
+                usersRequest = this.requestDao.save(requests)
+            } else{
+                console.log("INVALID REQUEST_STATUS")
+            }
         } else {
             console.log("INVALID CATEGORY")
         }
