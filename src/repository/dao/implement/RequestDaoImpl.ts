@@ -8,8 +8,8 @@ import * as awsConfig from '../../../../aws-config.json';
 export class RequestDaoImpl implements RequestDao {
     private aws = AWS;
 
-    saveUserRequest(requests: RequestVo): Promise<RequestVo> {
-        this.aws.config.update(awsConfig.config);
+    save(requests: RequestVo): Promise<RequestVo> {
+        this.aws.config.update(awsConfig.remoteConfig);
 
         let docClient = new this.aws.DynamoDB.DocumentClient();
         let params = {
@@ -31,7 +31,7 @@ export class RequestDaoImpl implements RequestDao {
         })
     }
     getUserRequest(userEmail: string, ordinal: number): Promise<RequestVo> {
-        this.aws.config.update(awsConfig.config);
+        this.aws.config.update(awsConfig.remoteConfig);
 
         let docClient = new this.aws.DynamoDB.DocumentClient();
 
@@ -42,7 +42,6 @@ export class RequestDaoImpl implements RequestDao {
                 ordinal: ordinal
             }
         }
-        console.log(params)
 
         return new Promise((resolve, reject) => {
             docClient.get(params, (err, data) => {
@@ -62,8 +61,8 @@ export class RequestDaoImpl implements RequestDao {
     }
 
     // DB에 저장된 특정 유저의 주문 내역들을 뽑아내기
-    loadUsersRequest(userEmail: string): Promise<Array<RequestVo>> {
-        this.aws.config.update(awsConfig.config)
+    getUsersRequest(userEmail: string): Promise<Array<RequestVo>> {
+        this.aws.config.update(awsConfig.remoteConfig)
 
         let docClient = new this.aws.DynamoDB.DocumentClient();
         let params = {
@@ -83,12 +82,10 @@ export class RequestDaoImpl implements RequestDao {
                     console.error("Unable to query. Error:", JSON.stringify(err, null, 2));
                     reject(new Error("AWS Error"))
                 } else {
-
                     if(data.Items.length < 1) {
                         resolve(<Array<RequestVo>> data.Items)
                     } else {
                         data.Items.forEach(item => {
-                            // console.log("Good:", JSON.stringify(data,null,2));
                             resolve(<Array<RequestVo>> data.Items)
                         })
                     }

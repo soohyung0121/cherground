@@ -12,7 +12,7 @@ export class UserDaoImpl implements UserDao {
     private aws = AWS;
 
     save(user: UserVo): Promise<UserVo> {
-        this.aws.config.update(awsConfig.config);
+        this.aws.config.update(awsConfig.remoteConfig);
 
         let docClient = new this.aws.DynamoDB.DocumentClient();
 
@@ -35,7 +35,7 @@ export class UserDaoImpl implements UserDao {
     }
 
     findUserVoByEmail(email: string): Promise<UserVo> {
-        this.aws.config.update(awsConfig.config);
+        this.aws.config.update(awsConfig.remoteConfig);
 
         let docClient = new this.aws.DynamoDB.DocumentClient();
 
@@ -63,7 +63,7 @@ export class UserDaoImpl implements UserDao {
     }
 
     existsByEmail(email: string): Promise<boolean> {
-        this.aws.config.update(awsConfig.config);
+        this.aws.config.update(awsConfig.remoteConfig);
 
         let docClient = new this.aws.DynamoDB.DocumentClient();
 

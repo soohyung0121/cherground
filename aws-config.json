@@ -4,5 +4,10 @@
         "accessKeyId" : "AKIA5NPGT2CTZRCDAMAA",
         "secretAccessKey" : "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",
         "endpoint" : "http://localhost:8000"
+    },
+    "remoteConfig": {
+        "region" : "ap-northeast-2",
+        "accessKeyId" : "AKIA4IU7POGY2W4QDZFQ",
+        "secretAccessKey" : "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"
     }
 }

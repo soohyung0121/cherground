@@ -21,7 +21,7 @@ export class RequestServiceImpl implements RequestService {
     }
 
     saveUserRequest = async (requests: Request): Promise<Request> => {
-        let userRequestList: Array<RequestVo> = await this.requestDao.loadUsersRequest(requests.userEmail);
+        let userRequestList: Array<RequestVo> = await this.requestDao.getUsersRequest(requests.userEmail);
         
         var ordinal;
         if (userRequestList.length > 0) {
@@ -36,9 +36,13 @@ export class RequestServiceImpl implements RequestService {
 
         // let category = this.requestMapper.convert(requests.category)
 
-        var usersRequest;
-        if(requests.category in Category){
-            usersRequest = this.requestDao.saveUserRequest(requests)
+        let usersRequest;
+        if(requests.categoryName in Category){
+            if(requests.requestStatusName in RequestStatus){
+                usersRequest = this.requestDao.save(requests)
+            } else{
+                console.log("INVALID REQUEST_STATUS")
+            }
         } else {
             console.log("INVALID CATEGORY")
         }
@@ -49,7 +53,8 @@ export class RequestServiceImpl implements RequestService {
         return new Promise((resolve, reject) => {
             usersRequest
             .then((result)=> {
-                resolve(requests)
+                let getResult = this.requestMapper.convert(result)
+                resolve(getResult)
             })
             .catch((err)=> {
                 reject(err)
@@ -58,7 +63,7 @@ export class RequestServiceImpl implements RequestService {
     }
 
     getUserRequestListByEmail = (userEmail: string): Promise<Array<Request>> => {
-        let userRequestListPromise: Promise<Array<Request>> = this.requestDao.loadUsersRequest(userEmail)
+        let userRequestListPromise: Promise<Array<Request>> = this.requestDao.getUsersRequest(userEmail)
         return new Promise((resolve, reject) => {
             userRequestListPromise
                 .then((data) => {

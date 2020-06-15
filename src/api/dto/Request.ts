@@ -4,11 +4,11 @@ export class Request {
     brandname: string;
     stylename: string;
     color: string;
-    wantedorder: number;
+    quantity: number;
     memo: string;
     image: string;
-    category: Category;
-    requestStatus: RequestStatus;
+    categoryName: Category;
+    requestStatusName: RequestStatus;
 }
 
 export enum Category {

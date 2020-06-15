@@ -17,11 +17,11 @@ export class RequestMapperImpl implements RequestMapper {
         requests.brandname = vo.brandName;
         requests.stylename = vo.styleName;
         requests.color = vo.color;
-        requests. = vo.quantity;
+        requests.quantity = vo.quantity;
         requests.memo = vo.memo;
         requests.image = vo.image;
-        requests.category = Category[vo.category];
-        requests.requestStatus = RequestStatus[vo.requestStatus]
+        requests.categoryName = Category[vo.categoryName];
+        requests.requestStatusName = RequestStatus[vo.requestStatusName]
         return requests;
     }
 
@@ -29,14 +29,14 @@ export class RequestMapperImpl implements RequestMapper {
         let requestsVo = new RequestVo();
         requestsVo.userEmail = dto.userEmail;
         requestsVo.ordinal = dto.ordinal;
-        requestsVo.brandname = dto.brandname;
-        requestsVo.stylename = dto.stylename;
+        requestsVo.brandName = dto.brandname;
+        requestsVo.styleName = dto.stylename;
         requestsVo.color = dto.color;
-        requestsVo.wantedorder = dto.wantedorder;
+        requestsVo.quantity = dto.quantity;
         requestsVo.memo = dto.memo;
         requestsVo.image = dto.image;
-        requestsVo.category = Category[dto.category];
-        requestsVo.requestStatus = Category[dto.requestStatus]
+        requestsVo.categoryName = Category[dto.categoryName];
+        requestsVo.requestStatusName = Category[dto.requestStatusName]
         return requestsVo; 
     }
 }
