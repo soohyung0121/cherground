@@ -7,9 +7,15 @@ import * as awsConfig from '../../../../aws-config.json';
 @injectable()
 export class RequestDaoImpl implements RequestDao {
     private aws = AWS;
+    private testConfig = awsConfig.config;
+    private deployConfig = awsConfig.remoteDatabaseConfig;
+
+    private selectConfig() {
+
+    }
 
     saveUserRequest(requests: RequestVo): Promise<RequestVo> {
-        this.aws.config.update(awsConfig.config);
+        this.aws.config.update(this.testConfig);
 
         let docClient = new this.aws.DynamoDB.DocumentClient();
         let params = {

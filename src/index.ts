@@ -1,4 +1,5 @@
 import App from './api/app/app';
+import serverless from 'serverless-http';
 
 const app = new App().app;
 
@@ -9,3 +10,5 @@ app.listen(port,() => {
 }).on('error', err => {
     console.log(err);
 })
+
+module.exports.handler = serverless(app);
