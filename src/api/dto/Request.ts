@@ -1,8 +1,8 @@
 export class Request {
     userEmail: string;
-    ordinal: number;
-    brandname: string;
-    stylename: string;
+    ordinal?: number;
+    brandName: string;
+    styleName: string;
     color: string;
     quantity: number;
     memo: string;

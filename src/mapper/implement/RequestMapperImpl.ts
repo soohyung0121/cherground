@@ -11,11 +11,10 @@ export class RequestMapperImpl implements RequestMapper {
 
     convert(vo: RequestVo): Request {
         let requests = new Request();
-
         requests.userEmail = vo.userEmail;
         requests.ordinal = vo.ordinal;
-        requests.brandname = vo.brandName;
-        requests.stylename = vo.styleName;
+        requests.brandName = vo.brandName;
+        requests.styleName = vo.styleName;
         requests.color = vo.color;
         requests.quantity = vo.quantity;
         requests.memo = vo.memo;

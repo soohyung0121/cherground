@@ -7,6 +7,12 @@ import * as awsConfig from '../../../../aws-config.json';
 @injectable()
 export class RequestDaoImpl implements RequestDao {
     private aws = AWS;
+    private testConfig = awsConfig.config;
+    private deployConfig = awsConfig.remoteDatabaseConfig;
+
+    private selectConfig() {
+
+    }
 
     save(requests: RequestVo): Promise<RequestVo> {
         this.aws.config.update(awsConfig.remoteConfig);

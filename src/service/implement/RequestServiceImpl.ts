@@ -37,6 +37,7 @@ export class RequestServiceImpl implements RequestService {
         // let category = this.requestMapper.convert(requests.category)
 
         let usersRequest;
+
         if(requests.categoryName in Category){
             if(requests.requestStatusName in RequestStatus){
                 usersRequest = this.requestDao.save(requests)

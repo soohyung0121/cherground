@@ -9,7 +9,10 @@ provider:
 functions:
   hello:
     handler: src/index.handler
-    events:
-      # - http:
-      #     path: sign-up
-      #     method: post
+    events: 
+      - http:
+          path: hello
+          method: get
+      - http:
+          path: sign-up
+          method: post
