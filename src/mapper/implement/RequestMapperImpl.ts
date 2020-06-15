@@ -28,10 +28,10 @@ export class RequestMapperImpl implements RequestMapper {
         let requestsVo = new RequestVo();
         requestsVo.userEmail = dto.userEmail;
         requestsVo.ordinal = dto.ordinal;
-        requestsVo.brandName = dto.brandName;
-        requestsVo.styleName = dto.styleName;
+        requestsVo.brandName = dto.brandname;
+        requestsVo.styleName = dto.stylename;
         requestsVo.color = dto.color;
-        requestsVo.quantity = dto.quantity
+        requestsVo.quantity = dto.quantity;
         requestsVo.memo = dto.memo;
         requestsVo.image = dto.image;
         requestsVo.categoryName = Category[dto.categoryName];
